@@ -1,7 +1,6 @@
 package testSteps;
 
 import com.codeborne.selenide.Condition;
-import cucumber.api.java.ca.I;
 import cucumber.api.java.ru.Дано;
 import cucumber.api.java.ru.И;
 import cucumber.api.java.ru.Когда;
@@ -12,11 +11,10 @@ import page.*;
 import java.time.Duration;
 
 public class InternetHerokuappSteps {
-    public final static String baseUrl = "https://the-internet.herokuapp.com/";
     int count;
 
-    @Дано("^Открываем https://the-internet\\.herokuapp\\.com/$")
-    public void openMainPage() {
+    @Дано("^Открываем '(.+)'")
+    public void openMainPage(String baseUrl) {
         MainPage.openWebSite(baseUrl);
         System.out.println("Открываем веб сайт: " + baseUrl);
     }
@@ -95,17 +93,25 @@ public class InternetHerokuappSteps {
         System.out.println("Отображается текст Hello World!");
     }
 
-    @Когда("^Ввести клавишу '(.+)' в поле ввода$")
+    @Когда("^Ввести символ '(.+)' в поле ввода$")
     public void enterKeyInInputField(String text) {
+        KeyPressesPage.inputWindow.shouldBe(Condition.visible, Duration.ofSeconds(3));
         KeyPressesPage.setTextOnInput(text);
-        System.out.println("Вводим текст в поле ввода");
+        System.out.println("Вводим " + text + " в поле ввода");
     }
 
     @Тогда("^Проверить, что клавиша '(.+)' отображается в You entered$")
     public void checkEnterKeyInInputField(String text) {
-        KeyPressesPage.checkedText.shouldBe(Condition.visible);
+        KeyPressesPage.checkedText.shouldBe(Condition.visible, Duration.ofSeconds(4));
         System.out.println("You entered: " + text.toUpperCase());
     }
+
+    @Когда("^Нажать клавишу '(.+)'$")
+    public void enterSpecialKeyInInputField(String specialKey) {
+        KeyPressesPage.setSpecialTextOnInput(specialKey);
+        System.out.println("Нажимаем клавишу " + specialKey);
+    }
+
 
     @Когда("^Добавить (\\d+) элемента$")
     public void addElement(int countClick) {
@@ -122,4 +128,6 @@ public class InternetHerokuappSteps {
         }
         System.out.println("Delete отображается " + count + " раз");
     }
+
+
 }

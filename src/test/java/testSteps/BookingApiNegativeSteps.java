@@ -19,6 +19,7 @@ public class BookingApiNegativeSteps {
                 "}";
         response = RestRequest.auth(authBody);
         token = response.jsonPath().get("token");
+        System.out.println("Получили токен: " + token);
     }
 
     @Тогда("^Получить сообщение об ошибке$")

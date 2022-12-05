@@ -21,6 +21,7 @@ public class BookingApiPositiveSteps {
                 "}";
         response = RestRequest.auth(authBody);
         token = response.jsonPath().get("token");
+        System.out.println("Получили токен: " + token);
     }
 
     @Тогда("^Вывести токен в консоль$")
@@ -46,14 +47,14 @@ public class BookingApiPositiveSteps {
         bookingId = response.jsonPath().get("bookingid");
         Assert.assertEquals(200, response.statusCode());
         Assert.assertNotNull(bookingId);
-        System.out.println("ID бронирования: " + bookingId);
+        System.out.println("Создали бронирование: " + bookingId);
     }
 
     @Тогда("^Проверить бронирование$")
     public void getBooking() {
         response = RestRequest.getBooking(bookingId);
         Assert.assertEquals(200, response.statusCode());
-        System.out.println("Получили бронирования: " + bookingId);
+        System.out.println("Получили бронирование: " + bookingId);
     }
 
     @Когда("^Обновить бронирование$")
